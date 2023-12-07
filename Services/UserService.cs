@@ -13,12 +13,12 @@ public static class UserService
 
     public static List<User> GetAll() => Users;
 
-    public static User? Get(int id) => Users.FirstOrDefault(e => e.Id == id);
+    public static User? Get(int id) => Users.FirstOrDefault(u => u.Id == id);
 
     public static User? Add(User user)
     {
         // Check if user email and username already exist
-        var existingUser = Users.FirstOrDefault(e => e.Email == user.Email || e.Username == user.Username);
+        var existingUser = Users.FirstOrDefault(u => u.Email == user.Email || u.Username == user.Username);
         if (existingUser != null)
             return null;
         user.Id = nextId++;
@@ -37,7 +37,7 @@ public static class UserService
 
     public static void Update(User user)
     {
-        var index = Users.FindIndex(e => e.Id == user.Id);
+        var index = Users.FindIndex(u => u.Id == user.Id);
         if (index == -1)
             return;
 
