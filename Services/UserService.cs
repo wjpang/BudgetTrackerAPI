@@ -15,10 +15,15 @@ public static class UserService
 
     public static User? Get(int id) => Users.FirstOrDefault(e => e.Id == id);
 
-    public static void Add(User user)
+    public static User? Add(User user)
     {
+        // Check if user email and username already exist
+        var existingUser = Users.FirstOrDefault(e => e.Email == user.Email || e.Username == user.Username);
+        if (existingUser != null)
+            return null;
         user.Id = nextId++;
         Users.Add(user);
+        return user;
     }
 
     public static void Delete(int id)

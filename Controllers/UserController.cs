@@ -34,7 +34,9 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult Create(User user)
     {
-        UserService.Add(user);
+        var newUser = UserService.Add(user);
+        if (newUser is null)
+            return BadRequest();
         return CreatedAtAction(nameof(Create), new { id = user.Id }, user);
     }
 
