@@ -18,8 +18,8 @@ public static class CategoryService
     public static Category? Add(Category category)
     {
         // Check if existing category has same name
-        var existingUser = Categories.FirstOrDefault(c => c.Name == category.Name);
-        if (existingUser != null)
+        var existingCategory = Categories.FirstOrDefault(c => c.Name == category.Name);
+        if (existingCategory != null)
             return null;
         category.Id = nextId++;
         Categories.Add(category);
