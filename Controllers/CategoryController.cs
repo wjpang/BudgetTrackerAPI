@@ -1,7 +1,6 @@
 using BudgetTracker.Models;
 using BudgetTracker.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace BudgetTracker.Controllers;
 
@@ -32,6 +31,7 @@ public class CategoryController : ControllerBase
 
     // POST action
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Create(Category category)
     {
         var newCategory = CategoryService.Add(category);
@@ -42,6 +42,7 @@ public class CategoryController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
+    [ValidateAntiForgeryToken]
     public IActionResult Update(int id, Category category)
     {
         if (id != category.Id)
@@ -58,6 +59,7 @@ public class CategoryController : ControllerBase
 
     // DELETE action
     [HttpDelete("{id}")]
+    [ValidateAntiForgeryToken]
     public IActionResult Delete(int id)
     {
         var category = CategoryService.Get(id);

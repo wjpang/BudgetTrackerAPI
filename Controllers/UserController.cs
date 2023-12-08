@@ -1,7 +1,6 @@
 using BudgetTracker.Models;
 using BudgetTracker.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace BudgetTracker.Controllers;
 
@@ -32,6 +31,7 @@ public class UserController : ControllerBase
 
     // POST action
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Create(User user)
     {
         var newUser = UserService.Add(user);
@@ -42,6 +42,7 @@ public class UserController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
+    [ValidateAntiForgeryToken]
     public IActionResult Update(int id, User user)
     {
         if (id != user.Id)
@@ -58,6 +59,7 @@ public class UserController : ControllerBase
 
     // DELETE action
     [HttpDelete("{id}")]
+    [ValidateAntiForgeryToken]
     public IActionResult Delete(int id)
     {
         var user = UserService.Get(id);
