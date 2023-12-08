@@ -1,12 +1,21 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BudgetTracker.Models
 {
     public class Budget
     {
+        // Properties
         public int Id { get; set; }
         public string? Description { get; set; }
-        public Category? ExpenseCategory { get; set; }
         public decimal Amount { get; set; }
         public bool IsExpense { get; set; }
-        public DateOnly Date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        // Navigation properties
+        public int UserId { get; set; } // Foreign Key
+        public virtual User? User { get; set; }
+        public int CategoryId { get; set; } // Foreign Key
+        public Category? ExpenseCategory { get; set; }
     }
 }
