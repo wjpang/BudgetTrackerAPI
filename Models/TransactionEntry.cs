@@ -1,16 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
+#pragma warning disable CS8618
+
 namespace BudgetTracker.Models
 {
     public class TransactionEntry
     {
+
         // Properties
         public int Id { get; set; }
-        public required string Description { get; set; }
-        [Precision(18, 2)]
+        [Required]
+        public string Description { get; set; }
+        [Required, Precision(18, 2)]
         public decimal Amount { get; set; }
-        [DataType(DataType.Date)]
+        [Required, DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         // Navigation properties

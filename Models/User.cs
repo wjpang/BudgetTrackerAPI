@@ -1,16 +1,25 @@
+using System.ComponentModel.DataAnnotations;
+
+#pragma warning disable CS8618
+
 namespace BudgetTracker.Models
 {
     public class User
     {
         // Properties
         public int Id { get; set; }
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
-        public required string Username { get; set; }
-        public required string Email { get; set; }
-        public required string Password { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
 
         // Navigation properties
-        public virtual ICollection<TransactionEntry>? TransactionEntries { get; set; }
+        public virtual ICollection<TransactionEntry>? TransactionEntries { get; set; } = new List<TransactionEntry>();
     }
 }
