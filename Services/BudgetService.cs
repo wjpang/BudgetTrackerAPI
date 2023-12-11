@@ -1,41 +1,41 @@
 using BudgetTracker.Models;
+using BudgetTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Services;
 
-public static class BudgetService
+public class BudgetService
 {
-    static List<Budget> Expenses { get; }
-    static int nextId = 1;
-    static BudgetService()
+    private readonly BudgetTrackerContext _context;
+    public BudgetService(BudgetTrackerContext context)
     {
-        Expenses = new List<Budget>();
+        _context = context;
     }
 
-    public static List<Budget> GetAll() => Expenses;
+    public async Task<List<Budget>> GetAllAsync() => await _context.Budget.ToListAsync();
 
-    public static Budget? Get(int id) => Expenses.FirstOrDefault(e => e.Id == id);
+    public async Task<Budget?> GetAsync(int id) => await _context.Budget.FirstOrDefaultAsync(e => e.Id == id);
 
-    public static void Add(Budget expense)
+    public async Task<Budget?> AddAsync(Budget expense)
     {
-        expense.Id = nextId++;
-        Expenses.Add(expense);
+        _context.Budget.Add(expense);
+        await _context.SaveChangesAsync();
+        return expense;
     }
 
-    public static void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var expense = Get(id);
-        if (expense is null)
-            return;
-
-        Expenses.Remove(expense);
+        var expense = await GetAsync(id);
+        if (expense != null)
+        {
+            _context.Budget.Remove(expense);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public static void Update(Budget expense)
+    public async Task UpdateAsync(Budget expense)
     {
-        var index = Expenses.FindIndex(e => e.Id == expense.Id);
-        if (index == -1)
-            return;
-
-        Expenses[index] = expense;
+        _context.Entry(expense).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
     }
 }

@@ -1,46 +1,45 @@
 using BudgetTracker.Models;
+using BudgetTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Services;
 
-public static class UserService
+public class UserService
 {
-    static List<User> Users { get; }
-    static int nextId = 1;
-    static UserService()
+    private readonly BudgetTrackerContext _context;
+    public UserService(BudgetTrackerContext context)
     {
-        Users = new List<User>();
+        _context = context;
     }
 
-    public static List<User> GetAll() => Users;
+    public async Task<List<User>> GetAllAsync() => await _context.User.ToListAsync();
 
-    public static User? Get(int id) => Users.FirstOrDefault(u => u.Id == id);
+    public async Task<User?> GetAsync(int id) => await _context.User.FirstOrDefaultAsync(u => u.Id == id);
 
-    public static User? Add(User user)
+    public async Task<User?> AddAsync(User user)
     {
         // Check if user email and username already exist
-        var existingUser = Users.FirstOrDefault(u => u.Email == user.Email || u.Username == user.Username);
+        var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Email == user.Email || u.Username == user.Username);
         if (existingUser != null)
             return null;
-        user.Id = nextId++;
-        Users.Add(user);
+        _context.User.Add(user);
+        await _context.SaveChangesAsync();
         return user;
     }
 
-    public static void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var user = Get(id);
-        if (user is null)
-            return;
-
-        Users.Remove(user);
+        var user = await GetAsync(id);
+        if (user != null)
+        {
+            _context.User.Remove(user);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public static void Update(User user)
+    public async Task UpdateAsync(User user)
     {
-        var index = Users.FindIndex(u => u.Id == user.Id);
-        if (index == -1)
-            return;
-
-        Users[index] = user;
+        _context.Entry(user).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
     }
 }

@@ -1,46 +1,45 @@
 using BudgetTracker.Models;
+using BudgetTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Services;
 
-public static class CategoryService
+public class CategoryService
 {
-    static List<Category> Categories { get; }
-    static int nextId = 1;
-    static CategoryService()
+    private readonly BudgetTrackerContext _context;
+    public CategoryService(BudgetTrackerContext context)
     {
-        Categories = new List<Category>();
+        _context = context;
     }
 
-    public static List<Category> GetAll() => Categories;
+    public async Task<List<Category>> GetAllAsync() => await _context.Category.ToListAsync();
 
-    public static Category? Get(int id) => Categories.FirstOrDefault(c => c.Id == id);
+    public async Task<Category?> GetAsync(int id) => await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
 
-    public static Category? Add(Category category)
+    public async Task<Category?> AddAsync(Category category)
     {
         // Check if existing category has same name
-        var existingCategory = Categories.FirstOrDefault(c => c.Name == category.Name);
+        var existingCategory = await _context.Category.FirstOrDefaultAsync(c => c.Name == category.Name);
         if (existingCategory != null)
             return null;
-        category.Id = nextId++;
-        Categories.Add(category);
+        _context.Category.Add(category);
+        await _context.SaveChangesAsync();
         return category;
     }
 
-    public static void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var category = Get(id);
-        if (category is null)
-            return;
-
-        Categories.Remove(category);
+        var category = await GetAsync(id);
+        if (category != null)
+        {
+            _context.Category.Remove(category);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public static void Update(Category category)
+    public async Task UpdateAsync(Category category)
     {
-        var index = Categories.FindIndex(c => c.Id == category.Id);
-        if (index == -1)
-            return;
-
-        Categories[index] = category;
+        _context.Entry(category).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
     }
 }

@@ -8,20 +8,22 @@ namespace BudgetTracker.Controllers;
 [Route("[controller]")]
 public class CategoryController : ControllerBase
 {
-    public CategoryController()
+    private readonly CategoryService _categoryService;
+
+    public CategoryController(CategoryService categoryService)
     {
+        _categoryService = categoryService;
     }
 
     // GET all action
     [HttpGet]
-    public ActionResult<List<Category>> GetAll() =>
-        CategoryService.GetAll();
+    public async Task<ActionResult<List<Category>>> GetAll() => await _categoryService.GetAllAsync();
 
     // GET by Id action
     [HttpGet("{id}")]
-    public ActionResult<Category> Get(int id)
+    public async Task<ActionResult<Category>> Get(int id)
     {
-        var category = CategoryService.Get(id);
+        var category = await _categoryService.GetAsync(id);
 
         if (category is null)
             return NotFound();
@@ -31,9 +33,9 @@ public class CategoryController : ControllerBase
 
     // POST action
     [HttpPost]
-    public IActionResult Create(Category category)
+    public async Task<IActionResult> Create(Category category)
     {
-        var newCategory = CategoryService.Add(category);
+        var newCategory = await _categoryService.AddAsync(category);
         if (newCategory is null)
             return BadRequest();
         return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
@@ -41,30 +43,30 @@ public class CategoryController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Category category)
+    public async Task<IActionResult> Update(int id, Category category)
     {
         if (id != category.Id)
             return BadRequest();
 
-        var existingCategory = CategoryService.Get(id);
+        var existingCategory = await _categoryService.GetAsync(id);
         if (existingCategory is null)
             return NotFound();
 
-        CategoryService.Update(category);
+        await _categoryService.UpdateAsync(category);
 
         return NoContent();
     }
 
     // DELETE action
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var category = CategoryService.Get(id);
+        var category = await _categoryService.GetAsync(id);
 
         if (category is null)
             return NotFound();
 
-        CategoryService.Delete(id);
+        await _categoryService.DeleteAsync(id);
 
         return NoContent();
     }

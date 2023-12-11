@@ -8,20 +8,22 @@ namespace BudgetTracker.Controllers;
 [Route("[controller]")]
 public class BudgetController : ControllerBase
 {
-    public BudgetController()
+    private readonly BudgetService _budgetService;
+
+    public BudgetController(BudgetService budgetService)
     {
+        _budgetService = budgetService;
     }
 
     // GET all action
     [HttpGet]
-    public ActionResult<List<Budget>> GetAll() =>
-        BudgetService.GetAll();
+    public async Task<ActionResult<List<Budget>>> GetAll() => await _budgetService.GetAllAsync();
 
     // GET by Id action
     [HttpGet("{id}")]
-    public ActionResult<Budget> Get(int id)
+    public async Task<ActionResult<Budget>> Get(int id)
     {
-        var budget = BudgetService.Get(id);
+        var budget = await _budgetService.GetAsync(id);
 
         if (budget is null)
             return NotFound();
@@ -31,38 +33,38 @@ public class BudgetController : ControllerBase
 
     // POST action
     [HttpPost]
-    public IActionResult Create(Budget budget)
+    public async Task<IActionResult> Create(Budget budget)
     {
-        BudgetService.Add(budget);
+        await _budgetService.AddAsync(budget);
         return CreatedAtAction(nameof(Create), new { id = budget.Id }, budget);
     }
 
     // PUT action
     [HttpPut("{id}")]
-    public IActionResult Update(int id, Budget budget)
+    public async Task<IActionResult> Update(int id, Budget budget)
     {
         if (id != budget.Id)
             return BadRequest();
 
-        var existingBudget = BudgetService.Get(id);
+        var existingBudget = await _budgetService.GetAsync(id);
         if (existingBudget is null)
             return NotFound();
 
-        BudgetService.Update(budget);
+        await _budgetService.UpdateAsync(budget);
 
         return NoContent();
     }
 
     // DELETE action
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var budget = BudgetService.Get(id);
+        var budget = await _budgetService.GetAsync(id);
 
         if (budget is null)
             return NotFound();
 
-        BudgetService.Delete(id);
+        await _budgetService.DeleteAsync(id);
 
         return NoContent();
     }

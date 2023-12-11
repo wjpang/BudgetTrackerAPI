@@ -8,20 +8,22 @@ namespace BudgetTracker.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    public UserController()
+    private readonly UserService _userService;
+
+    public UserController(UserService userService)
     {
+        _userService = userService;
     }
 
     // GET all action
     [HttpGet]
-    public ActionResult<List<User>> GetAll() =>
-        UserService.GetAll();
+    public async Task<ActionResult<List<User>>> GetAll() => await _userService.GetAllAsync();
 
     // GET by Id action
     [HttpGet("{id}")]
-    public ActionResult<User> Get(int id)
+    public async Task<ActionResult<User>> Get(int id)
     {
-        var user = UserService.Get(id);
+        var user = await _userService.GetAsync(id);
 
         if (user is null)
             return NotFound();
@@ -31,9 +33,9 @@ public class UserController : ControllerBase
 
     // POST action
     [HttpPost]
-    public IActionResult Create(User user)
+    public async Task<IActionResult> Create(User user)
     {
-        var newUser = UserService.Add(user);
+        var newUser = await _userService.AddAsync(user);
         if (newUser is null)
             return BadRequest();
         return CreatedAtAction(nameof(Create), new { id = user.Id }, user);
@@ -41,30 +43,30 @@ public class UserController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
-    public IActionResult Update(int id, User user)
+    public async Task<IActionResult> Update(int id, User user)
     {
         if (id != user.Id)
             return BadRequest();
 
-        var existingUser = UserService.Get(id);
+        var existingUser = await _userService.GetAsync(id);
         if (existingUser is null)
             return NotFound();
 
-        UserService.Update(user);
+        await _userService.UpdateAsync(user);
 
         return NoContent();
     }
 
     // DELETE action
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var user = UserService.Get(id);
+        var user = await _userService.GetAsync(id);
 
         if (user is null)
             return NotFound();
 
-        UserService.Delete(id);
+        await _userService.DeleteAsync(id);
 
         return NoContent();
     }

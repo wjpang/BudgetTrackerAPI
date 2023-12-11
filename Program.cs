@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using BudgetTracker.Data;
+using BudgetTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddScoped<BudgetService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<UserService>();
 
 var connectionString = builder.Configuration.GetConnectionString("BudgetTrackerContext");
 if (connectionString is null)
@@ -16,9 +22,9 @@ if (connectionString is null)
 builder.Services.AddDbContext<BudgetTrackerContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAntiforgery();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
