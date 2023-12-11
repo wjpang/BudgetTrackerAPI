@@ -12,15 +12,15 @@ namespace BudgetTracker.Models
         public int Id { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required, Precision(18, 2)]
+        [Precision(18, 2)]
         public decimal Amount { get; set; }
-        [Required, DataType(DataType.Date)]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         // Navigation properties
         public int UserId { get; set; } // Foreign Key
-        public virtual User? User { get; set; }
+        public virtual User User { get; set; }
         public int CategoryId { get; set; } // Foreign Key
-        public Category? Category { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
