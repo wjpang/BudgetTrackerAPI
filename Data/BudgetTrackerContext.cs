@@ -10,7 +10,7 @@ namespace BudgetTracker.Data
         {
         }
 
-        public DbSet<Budget> Budget { get; set; } = default!;
+        public DbSet<TransactionEntry> TransactionEntry { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<User> User { get; set; } = default!;
     }

@@ -11,6 +11,6 @@ namespace BudgetTracker.Models
         public string? Password { get; set; }
 
         // Navigation properties
-        public virtual ICollection<Budget>? Budgets { get; set; }
+        public virtual ICollection<TransactionEntry>? TransactionEntries { get; set; }
     }
 }

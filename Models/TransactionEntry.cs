@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BudgetTracker.Models
 {
-    public class Budget
+    public class TransactionEntry
     {
         // Properties
         public int Id { get; set; }
