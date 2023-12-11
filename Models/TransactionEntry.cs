@@ -7,7 +7,7 @@ namespace BudgetTracker.Models
     {
         // Properties
         public int Id { get; set; }
-        public string? Description { get; set; }
+        public required string Description { get; set; }
         [Precision(18, 2)]
         public decimal Amount { get; set; }
         [DataType(DataType.Date)]
