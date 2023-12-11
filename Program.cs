@@ -3,8 +3,18 @@ using BudgetTracker.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("BudgetTrackerContext");
+if (connectionString is null)
+{
+    throw new InvalidOperationException("Connection string 'BudgetTrackerContext' not found.");
+}
+
+// builder.Services.AddDbContext<BudgetTrackerContext>(options =>
+//     options.UseSqlServer(connectionString));
+
+// MySql
 builder.Services.AddDbContext<BudgetTrackerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BudgetTrackerContext")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 builder.Services.AddControllers();

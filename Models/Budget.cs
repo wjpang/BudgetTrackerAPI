@@ -18,6 +18,6 @@ namespace BudgetTracker.Models
         public int UserId { get; set; } // Foreign Key
         public virtual User? User { get; set; }
         public int CategoryId { get; set; } // Foreign Key
-        public Category? ExpenseCategory { get; set; }
+        public Category? Category { get; set; }
     }
 }
