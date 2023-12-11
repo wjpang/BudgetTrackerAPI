@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BudgetTracker.Migrations
 {
     [DbContext(typeof(BudgetTrackerContext))]
-    [Migration("20231211004911_InitialCreate")]
+    [Migration("20231211035034_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,7 +22,25 @@ namespace BudgetTracker.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("BudgetTracker.Models.Budget", b =>
+            modelBuilder.Entity("BudgetTracker.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsExpense")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("BudgetTracker.Models.TransactionEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,10 +57,8 @@ namespace BudgetTracker.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<bool>("IsExpense")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -53,21 +69,7 @@ namespace BudgetTracker.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Budget");
-                });
-
-            modelBuilder.Entity("BudgetTracker.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
+                    b.ToTable("TransactionEntry");
                 });
 
             modelBuilder.Entity("BudgetTracker.Models.User", b =>
@@ -77,18 +79,23 @@ namespace BudgetTracker.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -96,7 +103,7 @@ namespace BudgetTracker.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("BudgetTracker.Models.Budget", b =>
+            modelBuilder.Entity("BudgetTracker.Models.TransactionEntry", b =>
                 {
                     b.HasOne("BudgetTracker.Models.Category", "Category")
                         .WithMany()
@@ -105,7 +112,7 @@ namespace BudgetTracker.Migrations
                         .IsRequired();
 
                     b.HasOne("BudgetTracker.Models.User", "User")
-                        .WithMany("Budgets")
+                        .WithMany("TransactionEntries")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -117,7 +124,7 @@ namespace BudgetTracker.Migrations
 
             modelBuilder.Entity("BudgetTracker.Models.User", b =>
                 {
-                    b.Navigation("Budgets");
+                    b.Navigation("TransactionEntries");
                 });
 #pragma warning restore 612, 618
         }
