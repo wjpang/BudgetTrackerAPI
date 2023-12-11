@@ -10,7 +10,6 @@ namespace BudgetTracker.Models
         public string? Description { get; set; }
         [Precision(18, 2)]
         public decimal Amount { get; set; }
-        public bool IsExpense { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
