@@ -1,10 +1,11 @@
 using BudgetTracker.Models;
 using BudgetTracker.Data;
 using Microsoft.EntityFrameworkCore;
+using BudgetTracker.Services.Interfaces;
 
 namespace BudgetTracker.Services;
 
-public class CategoryService
+public class CategoryService : ICategoryService
 {
     private readonly BudgetTrackerContext _context;
     public CategoryService(BudgetTrackerContext context)

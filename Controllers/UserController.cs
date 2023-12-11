@@ -1,5 +1,5 @@
 using BudgetTracker.Models;
-using BudgetTracker.Services;
+using BudgetTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTracker.Controllers;
@@ -8,9 +8,9 @@ namespace BudgetTracker.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }

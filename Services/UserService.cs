@@ -1,12 +1,14 @@
 using BudgetTracker.Models;
 using BudgetTracker.Data;
 using Microsoft.EntityFrameworkCore;
+using BudgetTracker.Services.Interfaces;
 
 namespace BudgetTracker.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly BudgetTrackerContext _context;
+
     public UserService(BudgetTrackerContext context)
     {
         _context = context;

@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using BudgetTracker.Data;
 using BudgetTracker.Services;
-using BudgetTracker.Models;
+using BudgetTracker.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<TransactionEntryService>();
-builder.Services.AddScoped<CategoryService>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ITransactionEntryService, TransactionEntryService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var connectionString = builder.Configuration.GetConnectionString("BudgetTrackerContext");
 if (connectionString is null)

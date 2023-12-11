@@ -1,10 +1,11 @@
 using BudgetTracker.Models;
 using BudgetTracker.Data;
 using Microsoft.EntityFrameworkCore;
+using BudgetTracker.Services.Interfaces;
 
 namespace BudgetTracker.Services;
 
-public class TransactionEntryService
+public class TransactionEntryService : ITransactionEntryService
 {
     private readonly BudgetTrackerContext _context;
     public TransactionEntryService(BudgetTrackerContext context)

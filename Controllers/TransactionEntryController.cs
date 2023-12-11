@@ -1,5 +1,5 @@
 using BudgetTracker.Models;
-using BudgetTracker.Services;
+using BudgetTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTracker.Controllers;
@@ -8,9 +8,9 @@ namespace BudgetTracker.Controllers;
 [Route("[controller]")]
 public class TransactionEntryController : ControllerBase
 {
-    private readonly TransactionEntryService _transactionEntryService;
+    private readonly ITransactionEntryService _transactionEntryService;
 
-    public TransactionEntryController(TransactionEntryService transactionEntryService)
+    public TransactionEntryController(ITransactionEntryService transactionEntryService)
     {
         _transactionEntryService = transactionEntryService;
     }
