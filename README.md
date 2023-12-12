@@ -1,3 +1,3 @@
 # BudgetTracker
 
-A personal budget and expense tracker web app
+A personal income and expense tracker web app
