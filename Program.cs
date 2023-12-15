@@ -16,12 +16,16 @@ if (connectionString is null)
     throw new InvalidOperationException("Connection string 'BudgetTrackerContext' not found.");
 }
 
+// Sql Server
 // builder.Services.AddDbContext<BudgetTrackerContext>(options =>
 //     options.UseSqlServer(connectionString));
 
 // MySql
-builder.Services.AddDbContext<BudgetTrackerContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+// builder.Services.AddDbContext<BudgetTrackerContext>(options =>
+//     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+// SQLite
+builder.Services.AddSqlite<BudgetTrackerContext>(connectionString);
 
 builder.Services.AddControllers();
 builder.Services.AddAntiforgery();
