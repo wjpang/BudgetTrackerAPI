@@ -13,11 +13,11 @@ public class CategoryService : ICategoryService
         _context = context;
     }
 
-    public async Task<List<Category>> GetAllAsync() => await _context.Category.ToListAsync();
+    public async Task<List<Category>> GetAll() => await _context.Category.ToListAsync();
 
-    public async Task<Category?> GetAsync(int id) => await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
+    public async Task<Category?> Get(int id) => await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
 
-    public async Task<Category?> AddAsync(Category category)
+    public async Task<Category?> Add(Category category)
     {
         // Check if existing category has same name
         var existingCategory = await _context.Category.FirstOrDefaultAsync(c => c.Name == category.Name);
@@ -28,9 +28,9 @@ public class CategoryService : ICategoryService
         return category;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task Delete(int id)
     {
-        var category = await GetAsync(id);
+        var category = await Get(id);
         if (category != null)
         {
             _context.Category.Remove(category);
@@ -38,7 +38,7 @@ public class CategoryService : ICategoryService
         }
     }
 
-    public async Task UpdateAsync(Category category)
+    public async Task Update(Category category)
     {
         _context.Entry(category).State = EntityState.Modified;
         await _context.SaveChangesAsync();

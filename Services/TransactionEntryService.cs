@@ -13,20 +13,20 @@ public class TransactionEntryService : ITransactionEntryService
         _context = context;
     }
 
-    public async Task<List<TransactionEntry>> GetAllAsync() => await _context.TransactionEntry.ToListAsync();
+    public async Task<List<TransactionEntry>> GetAll() => await _context.TransactionEntry.ToListAsync();
 
-    public async Task<TransactionEntry?> GetAsync(int id) => await _context.TransactionEntry.FirstOrDefaultAsync(e => e.Id == id);
+    public async Task<TransactionEntry?> Get(int id) => await _context.TransactionEntry.FirstOrDefaultAsync(e => e.Id == id);
 
-    public async Task<TransactionEntry?> AddAsync(TransactionEntry transactionEntry)
+    public async Task<TransactionEntry?> Add(TransactionEntry transactionEntry)
     {
         _context.TransactionEntry.Add(transactionEntry);
         await _context.SaveChangesAsync();
         return transactionEntry;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task Delete(int id)
     {
-        var transactionEntry = await GetAsync(id);
+        var transactionEntry = await Get(id);
         if (transactionEntry != null)
         {
             _context.TransactionEntry.Remove(transactionEntry);
@@ -34,7 +34,7 @@ public class TransactionEntryService : ITransactionEntryService
         }
     }
 
-    public async Task UpdateAsync(TransactionEntry transactionEntry)
+    public async Task Update(TransactionEntry transactionEntry)
     {
         _context.Entry(transactionEntry).State = EntityState.Modified;
         await _context.SaveChangesAsync();

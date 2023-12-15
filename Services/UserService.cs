@@ -14,11 +14,11 @@ public class UserService : IUserService
         _context = context;
     }
 
-    public async Task<List<User>> GetAllAsync() => await _context.User.ToListAsync();
+    public async Task<List<User>> GetAll() => await _context.User.ToListAsync();
 
-    public async Task<User?> GetAsync(int id) => await _context.User.FirstOrDefaultAsync(u => u.Id == id);
+    public async Task<User?> Get(int id) => await _context.User.FirstOrDefaultAsync(u => u.Id == id);
 
-    public async Task<User?> AddAsync(User user)
+    public async Task<User?> Add(User user)
     {
         // Check if user email and username already exist
         var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Email == user.Email || u.Username == user.Username);
@@ -29,9 +29,9 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task Delete(int id)
     {
-        var user = await GetAsync(id);
+        var user = await Get(id);
         if (user != null)
         {
             _context.User.Remove(user);
@@ -39,7 +39,7 @@ public class UserService : IUserService
         }
     }
 
-    public async Task UpdateAsync(User user)
+    public async Task Update(User user)
     {
         _context.Entry(user).State = EntityState.Modified;
         await _context.SaveChangesAsync();

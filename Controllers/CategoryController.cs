@@ -17,13 +17,13 @@ public class CategoryController : ControllerBase
 
     // GET all action
     [HttpGet]
-    public async Task<ActionResult<List<Category>>> GetAll() => await _categoryService.GetAllAsync();
+    public async Task<ActionResult<List<Category>>> GetAll() => await _categoryService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
     public async Task<ActionResult<Category>> Get(int id)
     {
-        var category = await _categoryService.GetAsync(id);
+        var category = await _categoryService.Get(id);
 
         if (category is null)
             return NotFound();
@@ -35,7 +35,7 @@ public class CategoryController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Category category)
     {
-        var newCategory = await _categoryService.AddAsync(category);
+        var newCategory = await _categoryService.Add(category);
         if (newCategory is null)
             return BadRequest();
         return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
@@ -48,11 +48,11 @@ public class CategoryController : ControllerBase
         if (id != category.Id)
             return BadRequest();
 
-        var existingCategory = await _categoryService.GetAsync(id);
+        var existingCategory = await _categoryService.Get(id);
         if (existingCategory is null)
             return NotFound();
 
-        await _categoryService.UpdateAsync(category);
+        await _categoryService.Update(category);
 
         return NoContent();
     }
@@ -61,12 +61,12 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _categoryService.GetAsync(id);
+        var category = await _categoryService.Get(id);
 
         if (category is null)
             return NotFound();
 
-        await _categoryService.DeleteAsync(id);
+        await _categoryService.Delete(id);
 
         return NoContent();
     }

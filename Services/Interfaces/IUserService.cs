@@ -4,10 +4,10 @@ namespace BudgetTracker.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<List<User>> GetAllAsync();
-        Task<User?> GetAsync(int id);
-        Task<User?> AddAsync(User user);
-        Task DeleteAsync(int id);
-        Task UpdateAsync(User user);
+        Task<List<User>> GetAll();
+        Task<User?> Get(int id);
+        Task<User?> Add(User user);
+        Task Delete(int id);
+        Task Update(User user);
     }
 }

@@ -17,13 +17,13 @@ public class TransactionEntryController : ControllerBase
 
     // GET all action
     [HttpGet]
-    public async Task<ActionResult<List<TransactionEntry>>> GetAll() => await _transactionEntryService.GetAllAsync();
+    public async Task<ActionResult<List<TransactionEntry>>> GetAll() => await _transactionEntryService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
     public async Task<ActionResult<TransactionEntry>> Get(int id)
     {
-        var transactionEntry = await _transactionEntryService.GetAsync(id);
+        var transactionEntry = await _transactionEntryService.Get(id);
 
         if (transactionEntry is null)
             return NotFound();
@@ -35,7 +35,7 @@ public class TransactionEntryController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(TransactionEntry transactionEntry)
     {
-        await _transactionEntryService.AddAsync(transactionEntry);
+        await _transactionEntryService.Add(transactionEntry);
         return CreatedAtAction(nameof(Create), new { id = transactionEntry.Id }, transactionEntry);
     }
 
@@ -46,11 +46,11 @@ public class TransactionEntryController : ControllerBase
         if (id != transactionEntry.Id)
             return BadRequest();
 
-        var existingBudget = await _transactionEntryService.GetAsync(id);
+        var existingBudget = await _transactionEntryService.Get(id);
         if (existingBudget is null)
             return NotFound();
 
-        await _transactionEntryService.UpdateAsync(transactionEntry);
+        await _transactionEntryService.Update(transactionEntry);
 
         return NoContent();
     }
@@ -59,12 +59,12 @@ public class TransactionEntryController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var transactionEntry = await _transactionEntryService.GetAsync(id);
+        var transactionEntry = await _transactionEntryService.Get(id);
 
         if (transactionEntry is null)
             return NotFound();
 
-        await _transactionEntryService.DeleteAsync(id);
+        await _transactionEntryService.Delete(id);
 
         return NoContent();
     }

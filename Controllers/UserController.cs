@@ -17,13 +17,13 @@ public class UserController : ControllerBase
 
     // GET all action
     [HttpGet]
-    public async Task<ActionResult<List<User>>> GetAll() => await _userService.GetAllAsync();
+    public async Task<ActionResult<List<User>>> GetAll() => await _userService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> Get(int id)
     {
-        var user = await _userService.GetAsync(id);
+        var user = await _userService.Get(id);
 
         if (user is null)
             return NotFound();
@@ -35,7 +35,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(User user)
     {
-        var newUser = await _userService.AddAsync(user);
+        var newUser = await _userService.Add(user);
         if (newUser is null)
             return BadRequest();
         return CreatedAtAction(nameof(Create), new { id = user.Id }, user);
@@ -48,11 +48,11 @@ public class UserController : ControllerBase
         if (id != user.Id)
             return BadRequest();
 
-        var existingUser = await _userService.GetAsync(id);
+        var existingUser = await _userService.Get(id);
         if (existingUser is null)
             return NotFound();
 
-        await _userService.UpdateAsync(user);
+        await _userService.Update(user);
 
         return NoContent();
     }
@@ -61,12 +61,12 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var user = await _userService.GetAsync(id);
+        var user = await _userService.Get(id);
 
         if (user is null)
             return NotFound();
 
-        await _userService.DeleteAsync(id);
+        await _userService.Delete(id);
 
         return NoContent();
     }

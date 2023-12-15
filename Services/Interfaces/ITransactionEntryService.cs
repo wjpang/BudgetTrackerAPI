@@ -4,10 +4,10 @@ namespace BudgetTracker.Services.Interfaces
 {
     public interface ITransactionEntryService
     {
-        Task<List<TransactionEntry>> GetAllAsync();
-        Task<TransactionEntry?> GetAsync(int id);
-        Task<TransactionEntry?> AddAsync(TransactionEntry transactionEntry);
-        Task DeleteAsync(int id);
-        Task UpdateAsync(TransactionEntry transactionEntry);
+        Task<List<TransactionEntry>> GetAll();
+        Task<TransactionEntry?> Get(int id);
+        Task<TransactionEntry?> Add(TransactionEntry transactionEntry);
+        Task Delete(int id);
+        Task Update(TransactionEntry transactionEntry);
     }
 }
