@@ -24,7 +24,7 @@ public class UserService : IUserService
         var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Email == user.Email || u.Username == user.Username);
         if (existingUser != null)
             return null;
-        _context.User.Add(user);
+        await _context.User.AddAsync(user);
         await _context.SaveChangesAsync();
         return user;
     }

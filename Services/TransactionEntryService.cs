@@ -19,7 +19,7 @@ public class TransactionEntryService : ITransactionEntryService
 
     public async Task<TransactionEntry?> Add(TransactionEntry transactionEntry)
     {
-        _context.TransactionEntry.Add(transactionEntry);
+        await _context.TransactionEntry.AddAsync(transactionEntry);
         await _context.SaveChangesAsync();
         return transactionEntry;
     }

@@ -23,7 +23,7 @@ public class CategoryService : ICategoryService
         var existingCategory = await _context.Category.FirstOrDefaultAsync(c => c.Name == category.Name);
         if (existingCategory != null)
             return null;
-        _context.Category.Add(category);
+        await _context.Category.AddAsync(category);
         await _context.SaveChangesAsync();
         return category;
     }
