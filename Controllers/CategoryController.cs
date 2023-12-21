@@ -1,5 +1,6 @@
 using BudgetTracker.Models;
 using BudgetTracker.Services.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTracker.Controllers;
@@ -17,10 +18,12 @@ public class CategoryController : ControllerBase
 
     // GET all action
     [HttpGet]
+    [EnableCors("AllowAll")]
     public async Task<ActionResult<List<Category>>> GetAll() => await _categoryService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<ActionResult<Category>> Get(int id)
     {
         var category = await _categoryService.Get(id);
@@ -33,6 +36,7 @@ public class CategoryController : ControllerBase
 
     // POST action
     [HttpPost]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Create(Category category)
     {
         var newCategory = await _categoryService.Add(category);
@@ -43,6 +47,7 @@ public class CategoryController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Update(int id, Category category)
     {
         if (id != category.Id)
@@ -59,6 +64,7 @@ public class CategoryController : ControllerBase
 
     // DELETE action
     [HttpDelete("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Delete(int id)
     {
         var category = await _categoryService.Get(id);

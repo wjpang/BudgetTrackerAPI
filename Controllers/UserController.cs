@@ -1,5 +1,6 @@
 using BudgetTracker.Models;
 using BudgetTracker.Services.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTracker.Controllers;
@@ -17,10 +18,12 @@ public class UserController : ControllerBase
 
     // GET all action
     [HttpGet]
+    [EnableCors("AllowAll")]
     public async Task<ActionResult<List<User>>> GetAll() => await _userService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<ActionResult<User>> Get(int id)
     {
         var user = await _userService.Get(id);
@@ -33,6 +36,7 @@ public class UserController : ControllerBase
 
     // POST action
     [HttpPost]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Create(User user)
     {
         var newUser = await _userService.Add(user);
@@ -43,6 +47,7 @@ public class UserController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Update(int id, User user)
     {
         if (id != user.Id)
@@ -59,6 +64,7 @@ public class UserController : ControllerBase
 
     // DELETE action
     [HttpDelete("{id}")]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Delete(int id)
     {
         var user = await _userService.Get(id);
