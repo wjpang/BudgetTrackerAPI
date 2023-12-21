@@ -30,18 +30,6 @@ builder.Services.AddSqlite<BudgetTrackerContext>(connectionString);
 builder.Services.AddControllers();
 builder.Services.AddAntiforgery();
 
-// CORS configuration (Temporarily allows all while in development. Once final is complete, change to only allow front-end origin)
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -53,9 +41,6 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<BudgetTrackerContext>();
     db.Database.Migrate();
 }
-
-// CORS middleware (Temporarily allows all while in development. Once final is complete, change to only allow front-end origin)
-app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
