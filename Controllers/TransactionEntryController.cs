@@ -1,6 +1,5 @@
 using BudgetTracker.Models;
 using BudgetTracker.Services.Interfaces;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetTracker.Controllers;
@@ -18,12 +17,10 @@ public class TransactionEntryController : ControllerBase
 
     // GET all action
     [HttpGet]
-    [EnableCors("AllowAll")]
     public async Task<ActionResult<List<TransactionEntry>>> GetAll() => await _transactionEntryService.GetAll();
 
     // GET by Id action
     [HttpGet("{id}")]
-    [EnableCors("AllowAll")]
     public async Task<ActionResult<TransactionEntry>> Get(int id)
     {
         var transactionEntry = await _transactionEntryService.Get(id);
@@ -36,7 +33,6 @@ public class TransactionEntryController : ControllerBase
 
     // POST action
     [HttpPost]
-    [EnableCors("AllowAll")]
     public async Task<IActionResult> Create(TransactionEntry transactionEntry)
     {
         await _transactionEntryService.Add(transactionEntry);
@@ -45,7 +41,6 @@ public class TransactionEntryController : ControllerBase
 
     // PUT action
     [HttpPut("{id}")]
-    [EnableCors("AllowAll")]
     public async Task<IActionResult> Update(int id, TransactionEntry transactionEntry)
     {
         if (id != transactionEntry.Id)
@@ -62,7 +57,6 @@ public class TransactionEntryController : ControllerBase
 
     // DELETE action
     [HttpDelete("{id}")]
-    [EnableCors("AllowAll")]
     public async Task<IActionResult> Delete(int id)
     {
         var transactionEntry = await _transactionEntryService.Get(id);
