@@ -40,7 +40,18 @@ public class CategoryService : ICategoryService
 
     public async Task Update(Category category)
     {
-        _context.Entry(category).State = EntityState.Modified;
+        var existingCategory = await _context.Category.FindAsync(category.Id);
+
+        if (existingCategory == null)
+        {
+            // Handle the case where the category doesn't exist
+            return;
+        }
+
+        // Update the existing entity's properties
+        existingCategory.Name = category.Name;
+        existingCategory.IsExpense = category.IsExpense;
+
         await _context.SaveChangesAsync();
     }
 }
