@@ -41,7 +41,21 @@ public class UserService : IUserService
 
     public async Task Update(User user)
     {
-        _context.Entry(user).State = EntityState.Modified;
+        var existingUser = await _context.User.FindAsync(user.Id);
+
+        if (existingUser == null)
+        {
+            // Handle the case where the user doesn't exist
+            return;
+        }
+
+        // Update the existing entity's properties
+        existingUser.FirstName = user.FirstName;
+        existingUser.LastName = user.LastName;
+        existingUser.Username = user.Username;
+        existingUser.Email = user.Email;
+        existingUser.Password = user.Password;
+
         await _context.SaveChangesAsync();
     }
 }

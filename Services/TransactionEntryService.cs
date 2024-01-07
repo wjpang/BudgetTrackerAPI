@@ -36,7 +36,19 @@ public class TransactionEntryService : ITransactionEntryService
 
     public async Task Update(TransactionEntry transactionEntry)
     {
-        _context.Entry(transactionEntry).State = EntityState.Modified;
+        var existingEntry = await _context.TransactionEntry.FindAsync(transactionEntry.Id);
+
+        if (existingEntry == null)
+        {
+            // Handle the case where the category doesn't exist
+            return;
+        }
+
+        // Update the existing entity's properties
+        existingEntry.Description = transactionEntry.Description;
+        existingEntry.Amount = transactionEntry.Amount;
+        existingEntry.Date = transactionEntry.Date;
+
         await _context.SaveChangesAsync();
     }
 }
