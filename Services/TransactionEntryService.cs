@@ -17,6 +17,8 @@ public class TransactionEntryService : ITransactionEntryService
 
     public async Task<TransactionEntry?> Get(int id) => await _context.TransactionEntry.FirstOrDefaultAsync(e => e.Id == id);
 
+    public async Task<List<TransactionEntry>> GetEntriesByUser(int userId) => await _context.TransactionEntry.Where(e => e.UserId == userId).ToListAsync();
+
     public async Task<TransactionEntry?> Add(TransactionEntry transactionEntry)
     {
         await _context.TransactionEntry.AddAsync(transactionEntry);

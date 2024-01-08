@@ -31,6 +31,10 @@ public class TransactionEntryController : ControllerBase
         return transactionEntry;
     }
 
+    // GET by userId action
+    [HttpGet]
+    public async Task<ActionResult<List<TransactionEntry>>> GetByUserId(int userId) => await _transactionEntryService.GetEntriesByUser(userId);
+
     // POST action
     [HttpPost]
     public async Task<IActionResult> Create(TransactionEntry transactionEntry)
