@@ -32,7 +32,7 @@ public class TransactionEntryController : ControllerBase
     }
 
     // GET by userId action
-    [HttpGet]
+    [HttpGet("User/{userId}")]
     public async Task<ActionResult<List<TransactionEntry>>> GetByUserId(int userId) => await _transactionEntryService.GetEntriesByUser(userId);
 
     // POST action
