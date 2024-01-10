@@ -9,5 +9,6 @@ namespace BudgetTracker.Services.Interfaces
         Task<User?> Add(User user);
         Task Delete(int id);
         Task Update(User user);
+        Task<int?> Login(string username, string password);
     }
 }
