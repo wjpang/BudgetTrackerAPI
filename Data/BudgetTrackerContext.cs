@@ -10,6 +10,11 @@ namespace BudgetTracker.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         public DbSet<TransactionEntry> TransactionEntry { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<User> User { get; set; } = default!;

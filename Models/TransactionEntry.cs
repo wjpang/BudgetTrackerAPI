@@ -23,8 +23,8 @@ namespace BudgetTracker.Models
 
         // Navigation properties
         public int UserId { get; set; } // Foreign Key
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
         public int CategoryId { get; set; } // Foreign Key
-        public virtual Category Category { get; set; }
+        public virtual Category? Category { get; set; }
     }
 }
