@@ -73,7 +73,7 @@ public class UserController : ControllerBase
 
     // POST action (Login)
     [HttpPost("Login")]
-    public async Task<ActionResult<int?>> Login(Login login)
+    public async Task<ActionResult<int?>?> Login(Login login)
     {
         var userId = await _userService.Login(login);
         if (userId is null)
