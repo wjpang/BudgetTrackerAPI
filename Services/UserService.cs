@@ -59,9 +59,9 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<int?> Login(string username, string password)
+    public async Task<int?> Login(Login login)
     {
-        var user = await _context.User.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+        var user = await _context.User.FirstOrDefaultAsync(u => u.Username == login.Username && u.Password == login.Password);
         if (user == null)
             return null;
         return user.Id;
