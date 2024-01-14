@@ -1,7 +1,7 @@
-using BudgetTracker.Models;
 using BudgetTracker.Data;
-using Microsoft.EntityFrameworkCore;
+using BudgetTracker.Models;
 using BudgetTracker.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Services;
 

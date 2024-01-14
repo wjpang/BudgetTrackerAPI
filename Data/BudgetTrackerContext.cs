@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using BudgetTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetTracker.Data
 {

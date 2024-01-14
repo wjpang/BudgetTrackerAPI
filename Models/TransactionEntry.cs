@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;  // Required for Sqlite
+using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable CS8618
 

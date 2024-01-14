@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using BudgetTracker.Data;
 using BudgetTracker.Services;
 using BudgetTracker.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
