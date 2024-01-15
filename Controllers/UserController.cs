@@ -80,4 +80,11 @@ public class UserController : ControllerBase
             return null;
         return userId;
     }
+
+    // POST action (Reset password)
+    [HttpPost("ResetPassword")]
+    public async Task<ActionResult<bool>> ResetPassword(ResetPassword resetPassword)
+    {
+        return await _userService.ResetPassword(resetPassword);
+    }
 }

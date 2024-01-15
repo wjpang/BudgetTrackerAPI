@@ -66,4 +66,14 @@ public class UserService : IUserService
             return null;
         return user.Id;
     }
+
+    public async Task<bool> ResetPassword(ResetPassword resetPassword)
+    {
+        var user = await _context.User.FirstOrDefaultAsync(u => u.Email == resetPassword.Email && u.Username == resetPassword.Username);
+        if (user == null)
+            return false;
+        user.Password = resetPassword.Password;
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

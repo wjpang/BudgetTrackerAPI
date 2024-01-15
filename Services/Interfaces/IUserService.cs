@@ -10,5 +10,6 @@ namespace BudgetTracker.Services.Interfaces
         Task Delete(int id);
         Task Update(User user);
         Task<int?> Login(Login login);
+        Task<bool> ResetPassword(ResetPassword resetPassword);
     }
 }
