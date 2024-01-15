@@ -67,11 +67,11 @@ public class UserService : IUserService
         return user.Id;
     }
 
-    public async Task<bool> ResetPassword(ResetPassword resetPassword)
+    public async Task<bool?> ResetPassword(ResetPassword resetPassword)
     {
         var user = await _context.User.FirstOrDefaultAsync(u => u.Email == resetPassword.Email && u.Username == resetPassword.Username);
         if (user == null)
-            return false;
+            return null;
         user.Password = resetPassword.Password;
         await _context.SaveChangesAsync();
         return true;
